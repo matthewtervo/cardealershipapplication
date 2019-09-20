@@ -1,4 +1,4 @@
-package com.itrelliscardealership.model;
+package com.itrelliscardealership.dao.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
