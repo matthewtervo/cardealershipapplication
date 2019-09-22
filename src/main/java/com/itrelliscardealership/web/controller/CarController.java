@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //todo - remove this workaround to allow frontend to make requests
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost"}, maxAge = 3600)
 @RestController
 public class CarController {
 
@@ -23,7 +24,6 @@ public class CarController {
     @Autowired
     RequestParamResolver paramResolver;
 
-    @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
     @GetMapping(path = "/allcars")
     public List<Car> getAllCars() {
         List<Car> cars = new ArrayList<>();
@@ -31,7 +31,6 @@ public class CarController {
         return cars;
     }
 
-    @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
     @GetMapping(path = "/cars")
     public List<Car> search(@RequestParam(value = "exclusive", defaultValue = "true") boolean exclusive,
                             @RequestParam(value = "search") String search) {
