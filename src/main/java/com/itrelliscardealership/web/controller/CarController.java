@@ -5,6 +5,7 @@ import com.itrelliscardealership.dao.model.Car;
 import com.itrelliscardealership.web.util.RequestParamResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+//todo - remove this workaround to allow frontend to make requests
 @RestController
 public class CarController {
 
@@ -21,6 +23,7 @@ public class CarController {
     @Autowired
     RequestParamResolver paramResolver;
 
+    @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
     @GetMapping(path = "/allcars")
     public List<Car> getAllCars() {
         List<Car> cars = new ArrayList<>();
@@ -28,6 +31,7 @@ public class CarController {
         return cars;
     }
 
+    @CrossOrigin(origins = "http://localhost:8080", maxAge = 3600)
     @GetMapping(path = "/cars")
     public List<Car> search(@RequestParam(value = "exclusive", defaultValue = "true") boolean exclusive,
                             @RequestParam(value = "search") String search) {

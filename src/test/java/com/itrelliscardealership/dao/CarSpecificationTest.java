@@ -43,7 +43,7 @@ public class CarSpecificationTest {
         carOne.setHasPowerWindows(true);
         carOne.setHasNavigation(false);
         carOne.setHasHeatedSeats(true);
-        carOne.setFourWheelDrive(false);
+        carOne.setHasFourWheelDrive(false);
 
         carTwo = new Car();
         carTwo.set_id("59d2698cd6a3b8f0dd994c9d");
@@ -56,7 +56,7 @@ public class CarSpecificationTest {
         carTwo.setHasPowerWindows(true);
         carTwo.setHasNavigation(false);
         carTwo.setHasHeatedSeats(false);
-        carTwo.setFourWheelDrive(false);
+        carTwo.setHasFourWheelDrive(false);
 
         carThree = new Car();
         carThree.set_id("59d2698c86ab54cee8acdc7b");
@@ -69,7 +69,7 @@ public class CarSpecificationTest {
         carThree.setHasPowerWindows(false);
         carThree.setHasNavigation(false);
         carThree.setHasHeatedSeats(false);
-        carThree.setFourWheelDrive(false);
+        carThree.setHasFourWheelDrive(false);
     }
 
     @Test
@@ -150,4 +150,33 @@ public class CarSpecificationTest {
         assertThat(carOne, isIn(results));
         assertFalse(results.contains(carTwo));
     }
+
+    @Test
+    public void testSearch_booleanSpecification__shouldSucceed() {
+        CarSpecification spec =
+                new CarSpecification(new SearchCriteria("hasPowerWindows", SearchOperation.EQUALITY, "false"));
+
+        List<Car> results = carRepository.findAll(spec);
+
+        assertNotNull(results);
+        assertFalse(results.isEmpty());
+        assertThat(carThree, isIn(results));
+        assertFalse(results.contains(carOne));
+        assertFalse(results.contains(carTwo));
+    }
+
+    @Test
+    public void testSearch_integerSpecification__shouldSucceed() {
+        CarSpecification spec =
+                new CarSpecification(new SearchCriteria("year", SearchOperation.EQUALITY, "2013"));
+
+        List<Car> results = carRepository.findAll(spec);
+
+        assertNotNull(results);
+        assertFalse(results.isEmpty());
+        assertThat(carThree, isIn(results));
+        assertFalse(results.contains(carTwo));
+        assertFalse(results.contains(carTwo));
+    }
+
 }

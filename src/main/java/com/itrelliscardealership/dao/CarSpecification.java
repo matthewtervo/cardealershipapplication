@@ -20,15 +20,23 @@ public class CarSpecification implements Specification<Car> {
 
     @Override
     public Predicate toPredicate(Root<Car> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+        Object value = criteria.getValue();
+        if (root.get(criteria.getKey()).getJavaType() == Boolean.class) {
+            value = Boolean.valueOf((String)value);
+        }
+        if (root.get(criteria.getKey()).getJavaType() == Integer.class) {
+            value = Integer.valueOf((String)value);
+        }
+
         switch (criteria.getOperation()) {
             case EQUALITY:
-                return builder.equal(root.get(criteria.getKey()), criteria.getValue());
+                return builder.equal(root.get(criteria.getKey()), value);
             case GREATER_THAN:
                 return builder.greaterThan(root.get(
-                    criteria.getKey()), criteria.getValue().toString());
+                    criteria.getKey()), value.toString());
             case LESS_THAN:
                 return builder.lessThan(root.get(
-                    criteria.getKey()), criteria.getValue().toString());
+                    criteria.getKey()), value.toString());
             default:
                 return null;
         }

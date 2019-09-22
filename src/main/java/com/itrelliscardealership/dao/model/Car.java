@@ -20,14 +20,14 @@ public class Car {
     @Column(length=40)
     private String color;
 
-    private int year;
-    private int price;
-    private boolean hasSunroof;
-    private boolean isFourWheelDrive;
-    private boolean hasLowMiles;
-    private boolean hasPowerWindows;
-    private boolean hasNavigation;
-    private boolean hasHeatedSeats;
+    private Integer year;
+    private Integer price;
+    private Boolean hasSunroof;
+    private Boolean hasFourWheelDrive;
+    private Boolean hasLowMiles;
+    private Boolean hasPowerWindows;
+    private Boolean hasNavigation;
+    private Boolean hasHeatedSeats;
 
     public String get_id() {
         return _id;
@@ -45,14 +45,6 @@ public class Car {
         this.make = make;
     }
 
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
-    }
-
     public String getColor() {
         return color;
     }
@@ -61,59 +53,68 @@ public class Car {
         this.color = color;
     }
 
-    public int getPrice() {
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
-    public boolean isHasSunroof() {
+    public Boolean getHasSunroof() {
         return hasSunroof;
     }
 
-    public void setHasSunroof(boolean hasSunroof) {
+    public void setHasSunroof(Boolean hasSunroof) {
         this.hasSunroof = hasSunroof;
     }
 
-    public boolean isFourWheelDrive() {
-        return isFourWheelDrive;
+    public Boolean getHasFourWheelDrive() {
+        return hasFourWheelDrive;
     }
 
-    public void setFourWheelDrive(boolean fourWheelDrive) {
-        isFourWheelDrive = fourWheelDrive;
+    public void setHasFourWheelDrive(Boolean hasFourWheelDrive) {
+        this.hasFourWheelDrive = hasFourWheelDrive;
     }
 
-    public boolean isHasLowMiles() {
+
+    public Boolean getHasLowMiles() {
         return hasLowMiles;
     }
 
-    public void setHasLowMiles(boolean hasLowMiles) {
+    public void setHasLowMiles(Boolean hasLowMiles) {
         this.hasLowMiles = hasLowMiles;
     }
 
-    public boolean isHasPowerWindows() {
+    public Boolean getHasPowerWindows() {
         return hasPowerWindows;
     }
 
-    public void setHasPowerWindows(boolean hasPowerWindows) {
+    public void setHasPowerWindows(Boolean hasPowerWindows) {
         this.hasPowerWindows = hasPowerWindows;
     }
 
-    public boolean isHasNavigation() {
+    public Boolean getHasNavigation() {
         return hasNavigation;
     }
 
-    public void setHasNavigation(boolean hasNavigation) {
+    public void setHasNavigation(Boolean hasNavigation) {
         this.hasNavigation = hasNavigation;
     }
 
-    public boolean isHasHeatedSeats() {
+    public Boolean getHasHeatedSeats() {
         return hasHeatedSeats;
     }
 
-    public void setHasHeatedSeats(boolean hasHeatedSeats) {
+    public void setHasHeatedSeats(Boolean hasHeatedSeats) {
         this.hasHeatedSeats = hasHeatedSeats;
     }
 
@@ -152,7 +153,7 @@ public class Car {
                 .append("[hasPowerWindows").append(hasPowerWindows).append("]")
                 .append("[hasNavigation").append(hasNavigation).append("]")
                 .append("[hasHeatedSeats").append(hasHeatedSeats).append("]")
-                .append("[fourWheelDrive").append(isFourWheelDrive).append("]");
+                .append("[hasFourWheelDrive").append(hasFourWheelDrive).append("]");
         return builder.toString();
     }
 
