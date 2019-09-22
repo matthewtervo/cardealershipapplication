@@ -14,7 +14,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static org.hamcrest.collection.IsIn.isIn;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

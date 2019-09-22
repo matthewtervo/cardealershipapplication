@@ -2,7 +2,6 @@ package com.itrelliscardealership.dao;
 
 import com.itrelliscardealership.web.util.SearchCriteria;
 import com.itrelliscardealership.dao.model.Car;
-import com.itrelliscardealership.web.util.SearchOperation;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
