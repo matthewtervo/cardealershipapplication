@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import Checkbox from "./components/Checkbox";
 import CarSearchResults from "./components/CarSearchResults";
 
-const OPTIONS = ["Sunroof", "Low Miles", "Power Windows", "Navigation", "Heated Seats", "Four Wheel Drive"];
-const url = "http://localhost:8080/cars?search=";
+const OPTIONS = ["InclusiveSearch", "Sunroof", "Four Wheel Drive", "Low Miles", "Power Windows", "Navigation", "Heated Seats"];
+const url = "http://localhost:8080/cars";
 
 class App extends Component {
     state = {
@@ -32,14 +32,16 @@ class App extends Component {
 
     handleFormSubmit = formSubmitEvent => {
         formSubmitEvent.preventDefault();
-        var query = "";
+        var query = "?search=";
         var append = false;
         Object.keys(this.state.checkboxes)
             .filter(checkbox => this.state.checkboxes[checkbox])
             .forEach(checkbox => {
                 console.log(checkbox, "is selected.");
                 //Todo - replace this, switch?
-                if("Sunroof" === (checkbox)) {
+                if("InclusiveSearch"=== (checkbox)) {
+                    query = "?exclusive=false&search="
+                } else if("Sunroof" === (checkbox)) {
                     query = query + "hasSunroof:true";
                     append = true;
                 } else if("Low Miles" === (checkbox)) {
@@ -107,6 +109,7 @@ class App extends Component {
                     <h2>Car Dealership Search Inventory</h2>
                     <div className="col-sm-12">
                         <form onSubmit={this.handleFormSubmit}>
+
                             {this.createCheckboxes()}
                             <div className="form-group mt-2">
                                 <button type="submit" className="btn btn-primary">
