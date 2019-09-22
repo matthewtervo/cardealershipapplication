@@ -1,8 +1,11 @@
 package com.itrelliscardealership.web.controller;
 
+import com.google.common.base.Joiner;
 import com.itrelliscardealership.dao.CarSpecificationsBuilder;
 import com.itrelliscardealership.dao.CarRepository;
 import com.itrelliscardealership.dao.model.Car;
+import com.itrelliscardealership.web.util.RequestParamResolver;
+import com.itrelliscardealership.web.util.SearchOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +23,9 @@ public class CarController {
     @Autowired
     CarRepository carRepository;
 
+    @Autowired
+    RequestParamResolver paramResolver;
+
     @GetMapping(path = "/allcars")
     public List<Car> getAllCars() {
         List<Car> cars = new ArrayList<>();
@@ -29,13 +35,7 @@ public class CarController {
 
     @GetMapping(path = "/cars")
     public List<Car> search(@RequestParam(value = "search") String search) {
-        CarSpecificationsBuilder builder = new CarSpecificationsBuilder();
-        Pattern pattern = Pattern.compile("(\\w+?)(:|<|>)(\\w+?),");
-        Matcher matcher = pattern.matcher(search + ",");
-        while (matcher.find()) {
-            builder.with(matcher.group(1), matcher.group(2), matcher.group(3));
-        }
-        Specification<Car> spec = builder.build();
+        Specification<Car> spec = paramResolver.resolveSpecification(search);
         return carRepository.findAll(spec);
     }
 }
