@@ -2,6 +2,7 @@ package com.itrelliscardealership.dao;
 
 import com.itrelliscardealership.dao.model.Car;
 import com.itrelliscardealership.web.util.SearchCriteria;
+import com.itrelliscardealership.web.util.SearchOperation;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,8 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 
 import static org.hamcrest.collection.IsIn.isIn;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -27,6 +27,7 @@ public class CarSpecificationTest {
 
     private Car carOne;
     private Car carTwo;
+    private Car carThree;
 
     @Before
     public void init() {
@@ -55,12 +56,25 @@ public class CarSpecificationTest {
         carTwo.setHasNavigation(false);
         carTwo.setHasHeatedSeats(false);
         carTwo.setFourWheelDrive(false);
+
+        carThree = new Car();
+        carThree.set_id("59d2698c86ab54cee8acdc7b");
+        carThree.setMake("Mercedes");
+        carThree.setColor("Gra");
+        carThree.setYear(2013);
+        carThree.setPrice(15669);
+        carThree.setHasSunroof(false);
+        carThree.setHasLowMiles(true);
+        carThree.setHasPowerWindows(false);
+        carThree.setHasNavigation(false);
+        carThree.setHasHeatedSeats(false);
+        carThree.setFourWheelDrive(false);
     }
 
     @Test
     public void testSearch_oneSpecification_shouldSucceed() {
         CarSpecification spec =
-                new CarSpecification(new SearchCriteria("make", ":", "toyota"));
+                new CarSpecification(new SearchCriteria("make", SearchOperation.EQUALITY, "toyota"));
 
         List<Car> results = carRepository.findAll(spec);
 
@@ -73,9 +87,9 @@ public class CarSpecificationTest {
     @Test
     public void testSearch_twoSpecifications_shouldSucceed() {
         CarSpecification spec1 =
-                new CarSpecification(new SearchCriteria("make", ":", "toyota"));
+                new CarSpecification(new SearchCriteria("make", SearchOperation.EQUALITY, "toyota"));
         CarSpecification spec2 =
-                new CarSpecification(new SearchCriteria("year", ":", "2015"));
+                new CarSpecification(new SearchCriteria("year", SearchOperation.EQUALITY, "2015"));
 
         List<Car> results = carRepository.findAll(Specification.where(spec1).and(spec2));
 
@@ -88,11 +102,35 @@ public class CarSpecificationTest {
     @Test
     public void testSearch_invalidSpecification_shouldSucceed() {
         CarSpecification spec =
-                new CarSpecification(new SearchCriteria("make", ":", "invalid"));
+                new CarSpecification(new SearchCriteria("make", SearchOperation.EQUALITY, "invalid"));
 
         List<Car> results = carRepository.findAll(spec);
 
         assertNotNull(results);
         assertTrue(results.isEmpty());
+    }
+
+    @Test
+    public void testSearch_LessThanSpecification_shouldSucceed() {
+        CarSpecification spec =
+                new CarSpecification(new SearchCriteria("year", SearchOperation.LESS_THAN, "2014"));
+
+        List<Car> results = carRepository.findAll(spec);
+
+        assertNotNull(results);
+        assertFalse(results.isEmpty());
+        assertFalse(results.contains(carOne));
+        assertThat(carThree, isIn(results));
+    }
+
+    @Test
+    public void testSearch_greaterThanSpecification_shouldSucceed() {
+        CarSpecification spec =
+                new CarSpecification(new SearchCriteria("year", SearchOperation.GREATER_THAN, "2015"));
+
+        List<Car> results = carRepository.findAll(spec);
+
+        assertNotNull(results);
+        assertFalse(results.isEmpty());
     }
 }

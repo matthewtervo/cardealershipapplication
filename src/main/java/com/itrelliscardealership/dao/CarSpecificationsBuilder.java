@@ -2,6 +2,7 @@ package com.itrelliscardealership.dao;
 
 import com.itrelliscardealership.web.util.SearchCriteria;
 import com.itrelliscardealership.dao.model.Car;
+import com.itrelliscardealership.web.util.SearchOperation;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
@@ -13,12 +14,13 @@ public class CarSpecificationsBuilder {
     private final List<SearchCriteria> params;
 
     public CarSpecificationsBuilder() {
-        params = new ArrayList<SearchCriteria>();
+        params = new ArrayList<>();
     }
 
     public CarSpecificationsBuilder with(
             String key, String operation, Object value) {
-        params.add(new SearchCriteria(key, operation, value));
+        SearchOperation op = SearchOperation.getSimpleOperation(operation.charAt(0));
+        params.add(new SearchCriteria(key, op, value));
         return this;
     }
 

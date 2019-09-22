@@ -2,6 +2,7 @@ package com.itrelliscardealership.dao;
 
 import com.itrelliscardealership.web.util.SearchCriteria;
 import com.itrelliscardealership.dao.model.Car;
+import com.itrelliscardealership.web.util.SearchOperation;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -20,9 +21,17 @@ public class CarSpecification implements Specification<Car> {
 
     @Override
     public Predicate toPredicate(Root<Car> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-        if (criteria.getOperation().equalsIgnoreCase(":")) {
-            return builder.equal(root.get(criteria.getKey()), criteria.getValue());
+        switch (criteria.getOperation()) {
+            case EQUALITY:
+                return builder.equal(root.get(criteria.getKey()), criteria.getValue());
+            case GREATER_THAN:
+                return builder.greaterThan(root.get(
+                    criteria.getKey()), criteria.getValue().toString());
+            case LESS_THAN:
+                return builder.lessThan(root.get(
+                    criteria.getKey()), criteria.getValue().toString());
+            default:
+                return null;
         }
-        return null;
     }
 }
