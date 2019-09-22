@@ -7,14 +7,15 @@ import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CarSpecificationsBuilder {
 
     private final List<SearchCriteria> params;
+    private final boolean exclusive;
 
-    public CarSpecificationsBuilder() {
-        params = new ArrayList<>();
+    public CarSpecificationsBuilder(boolean exclusive) {
+        this.exclusive = exclusive;
+        this.params = new ArrayList<>();
     }
 
     public CarSpecificationsBuilder with(
@@ -29,14 +30,14 @@ public class CarSpecificationsBuilder {
             return null;
         }
 
-        List<Specification> specs = params.stream()
-                .map(CarSpecification::new)
-                .collect(Collectors.toList());
-
-        Specification result = specs.get(0);
+        Specification result = new CarSpecification(params.get(0));
 
         for (int i = 1; i < params.size(); i++) {
-            result = Specification.where(result).and(specs.get(i));
+            if(exclusive) {
+                result = Specification.where(result).and(new CarSpecification(params.get(i)));
+            } else {
+                result = Specification.where(result).or(new CarSpecification(params.get(i)));
+            }
         }
         return result;
     }

@@ -60,7 +60,7 @@ public class CarSpecificationTest {
         carThree = new Car();
         carThree.set_id("59d2698c86ab54cee8acdc7b");
         carThree.setMake("Mercedes");
-        carThree.setColor("Gra");
+        carThree.setColor("Gray");
         carThree.setYear(2013);
         carThree.setPrice(15669);
         carThree.setHasSunroof(false);
@@ -132,5 +132,21 @@ public class CarSpecificationTest {
 
         assertNotNull(results);
         assertFalse(results.isEmpty());
+    }
+
+    @Test
+    public void testSearch_nonExclusive__shouldSucceed() {
+        CarSpecification spec1 =
+                new CarSpecification(new SearchCriteria("make", SearchOperation.EQUALITY, "mercedes"));
+        CarSpecification spec2 =
+                new CarSpecification(new SearchCriteria("color", SearchOperation.EQUALITY, "white"));
+
+        List<Car> results = carRepository.findAll(Specification.where(spec1).or(spec2));
+
+        assertNotNull(results);
+        assertFalse(results.isEmpty());
+        assertThat(carThree, isIn(results));
+        assertThat(carOne, isIn(results));
+        assertFalse(results.contains(carTwo));
     }
 }

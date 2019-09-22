@@ -1,11 +1,8 @@
 package com.itrelliscardealership.web.controller;
 
-import com.google.common.base.Joiner;
-import com.itrelliscardealership.dao.CarSpecificationsBuilder;
 import com.itrelliscardealership.dao.CarRepository;
 import com.itrelliscardealership.dao.model.Car;
 import com.itrelliscardealership.web.util.RequestParamResolver;
-import com.itrelliscardealership.web.util.SearchOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @RestController
 public class CarController {
@@ -34,8 +29,9 @@ public class CarController {
     }
 
     @GetMapping(path = "/cars")
-    public List<Car> search(@RequestParam(value = "search") String search) {
-        Specification<Car> spec = paramResolver.resolveSpecification(search);
+    public List<Car> search(@RequestParam(value = "exclusive", defaultValue = "true") boolean exclusive,
+                            @RequestParam(value = "search") String search) {
+        Specification<Car> spec = paramResolver.resolveSpecification(exclusive, search);
         return carRepository.findAll(spec);
     }
 }
