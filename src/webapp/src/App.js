@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Checkbox from "./components/Checkbox";
 import CarSearchResults from "./components/CarSearchResults";
 
-const OPTIONS = ["InclusiveSearch", "Sunroof", "Four Wheel Drive", "Low Miles", "Power Windows", "Navigation", "Heated Seats"];
+const OPTIONS = ["Inclusive Search", "Sunroof", "Four Wheel Drive", "Low Miles", "Power Windows", "Navigation", "Heated Seats"];
 const url = "http://localhost:8080/cars";
 
 class App extends Component {
@@ -39,7 +39,7 @@ class App extends Component {
             .forEach(checkbox => {
                 console.log(checkbox, "is selected.");
                 //Todo - replace this, switch?
-                if("InclusiveSearch"=== (checkbox)) {
+                if("Inclusive Search"=== (checkbox)) {
                     query = "?exclusive=false&search="
                 } else if("Sunroof" === (checkbox)) {
                     query = query + "hasSunroof:true";
