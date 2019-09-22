@@ -116,4 +116,44 @@ public class Car {
     public void setHasHeatedSeats(boolean hasHeatedSeats) {
         this.hasHeatedSeats = hasHeatedSeats;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 31 * hash + (_id == null ? 0 : _id.hashCode());
+        hash = 31 * hash + (make == null ? 0 : make.hashCode());
+        hash = 31 * hash + (color == null ? 0 : color.hashCode());
+        hash = 31 * hash + (int) year;
+        hash = 31 * hash + (int) price;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        final Car car = (Car) obj;
+        return _id.equals(car._id);
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("Car [_id=").append(_id).append("]")
+                .append("[make=").append(make).append("]")
+                .append("[color=").append(color).append("]")
+                .append("[price").append(price).append("]")
+                .append("[hasSunroof").append(hasSunroof).append("]")
+                .append("[hasLowMiles").append(hasLowMiles).append("]")
+                .append("[hasPowerWindows").append(hasPowerWindows).append("]")
+                .append("[hasNavigation").append(hasNavigation).append("]")
+                .append("[hasHeatedSeats").append(hasHeatedSeats).append("]")
+                .append("[fourWheelDrive").append(isFourWheelDrive).append("]");
+        return builder.toString();
+    }
+
 }
