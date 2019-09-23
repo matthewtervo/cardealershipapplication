@@ -1,8 +1,8 @@
-package com.itrelliscardealership.dao;
+package com.cardealership.dao;
 
-import com.itrelliscardealership.web.util.SearchCriteria;
-import com.itrelliscardealership.dao.model.Car;
-import com.itrelliscardealership.web.util.SearchOperation;
+import com.cardealership.web.util.SearchCriteria;
+import com.cardealership.dao.model.Car;
+import com.cardealership.web.util.SearchOperation;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;

@@ -1,8 +1,8 @@
-package com.itrelliscardealership.web.util;
+package com.cardealership.web.util;
 
+import com.cardealership.dao.CarSpecificationsBuilder;
+import com.cardealership.dao.model.Car;
 import com.google.common.base.Joiner;
-import com.itrelliscardealership.dao.CarSpecificationsBuilder;
-import com.itrelliscardealership.dao.model.Car;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 

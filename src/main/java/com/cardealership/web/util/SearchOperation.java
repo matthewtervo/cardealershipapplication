@@ -1,4 +1,4 @@
-package com.itrelliscardealership.web.util;
+package com.cardealership.web.util;
 
 public enum SearchOperation {
     EQUALITY, GREATER_THAN, LESS_THAN;

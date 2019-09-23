@@ -1,8 +1,8 @@
-package com.itrelliscardealership.web.controller;
+package com.cardealership.web.controller;
 
-import com.itrelliscardealership.dao.CarRepository;
-import com.itrelliscardealership.dao.model.Car;
-import com.itrelliscardealership.web.util.RequestParamResolver;
+import com.cardealership.dao.CarRepository;
+import com.cardealership.dao.model.Car;
+import com.cardealership.web.util.RequestParamResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -24,7 +24,7 @@ public class CarController {
     @Autowired
     RequestParamResolver paramResolver;
 
-    @GetMapping(path = "/allcars")
+    @GetMapping(path = "/carsall")
     public List<Car> getAllCars() {
         List<Car> cars = new ArrayList<>();
         carRepository.findAll().forEach(cars::add);

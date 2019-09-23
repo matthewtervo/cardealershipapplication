@@ -1,8 +1,10 @@
 package com.itrelliscardealership.dao;
 
-import com.itrelliscardealership.dao.model.Car;
-import com.itrelliscardealership.web.util.SearchCriteria;
-import com.itrelliscardealership.web.util.SearchOperation;
+import com.cardealership.dao.CarRepository;
+import com.cardealership.dao.CarSpecification;
+import com.cardealership.dao.model.Car;
+import com.cardealership.web.util.SearchCriteria;
+import com.cardealership.web.util.SearchOperation;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

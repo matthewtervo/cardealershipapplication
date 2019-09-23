@@ -1,4 +1,4 @@
-package com.itrelliscardealership.web.util;
+package com.cardealership.web.util;
 
 public class SearchCriteria {
     private String key;
