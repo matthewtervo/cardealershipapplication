@@ -62,4 +62,18 @@ public class CarController {
         results.add(result);
         return results;
     }
+
+    @PutMapping(path = "/cars/update")
+    public List<Car> updateCar(@RequestBody() Car car) {
+        List<Car> results = new ArrayList<>();
+        String id = car.get_id();
+        if(id != null) {
+            Optional<Car> foundCar = carRepository.findById(id);
+            if(foundCar.isPresent()) {
+                Car updatedCar = carRepository.save(car);
+                results.add(updatedCar);
+            }
+        }
+        return results;
+    }
 }
