@@ -5,11 +5,7 @@ import com.cardealership.dao.model.Car;
 import com.cardealership.web.util.RequestParamResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +45,21 @@ public class CarController {
                 results.add(car.get());
             }
         }
+        return results;
+    }
+
+    @PostMapping(path = "/cars/create")
+    public List<Car> createCar(@RequestBody() Car car) {
+        List<Car> results = new ArrayList<>();
+        String id = car.get_id();
+        if(id != null) {
+            Optional<Car> foundCar = carRepository.findById(id);
+            if(foundCar.isPresent()) {
+                return results;
+            }
+        }
+        Car result = carRepository.save(car);
+        results.add(result);
         return results;
     }
 }

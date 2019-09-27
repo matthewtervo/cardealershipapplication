@@ -1,17 +1,19 @@
 package com.cardealership.dao.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Car {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(length=40)
+    @GeneratedValue(generator="system-uuid")
+    @GenericGenerator(name="system-uuid", strategy = "uuid")
+    @Column(length=40, unique = true)
     private String _id;
 
     @Column(length=40)
