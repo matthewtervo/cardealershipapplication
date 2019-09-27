@@ -76,4 +76,9 @@ public class CarController {
         }
         return results;
     }
+
+    @DeleteMapping(path = "/cars/delete/{id}")
+    public void deleteCar(@PathVariable(value = "id") String id) {
+        carRepository.deleteById(id);
+    }
 }
