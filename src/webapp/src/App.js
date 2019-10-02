@@ -32,32 +32,51 @@ class App extends Component {
 
     handleFormSubmit = formSubmitEvent => {
         formSubmitEvent.preventDefault();
-        let query = "";
-        let exclusive = true;
+        var query = "?search=";
+        var append = false;
         Object.keys(this.state.checkboxes)
             .filter(checkbox => this.state.checkboxes[checkbox])
             .forEach(checkbox => {
-                if("Inclusive Search" === checkbox) {
-                    exclusive = false;
-                } else if("Sunroof" === checkbox) {
-                    query = query + "hasSunroof:true,";
-                } else if("Low Miles" === checkbox) {
-                    query = query + "hasLowMiles:true,";
-                } else if("Power Windows" === checkbox) {
-                    query = query + "hasPowerWindows:true,";
-                } else if("Navigation" === checkbox) {
-                    query = query + "hasNavigation:true,";
-                } else if("Heated Seats" === checkbox) {
-                    query = query + "hasHeatedSeats:true,";
-                } else if("Four Wheel Drive" === checkbox) {
-                    query = query + "hasFourWheelDrive:true,";
+                console.log(checkbox, "is selected.");
+                //Todo - replace this, switch?
+                if("Inclusive Search"=== (checkbox)) {
+                    query = "?exclusive=false&search="
+                } else if("Sunroof" === (checkbox)) {
+                    query = query + "hasSunroof:true";
+                    append = true;
+                } else if("Low Miles" === (checkbox)) {
+                    if (append) {
+                        query = query + ",";
+                    }
+                    query = query + "hasLowMiles:true";
+                    append = true;
+                } else if("Power Windows" === (checkbox)) {
+                    if (append) {
+                        query = query + ",";
+                    }
+                    query = query + "hasPowerWindows:true";
+                    append = true;
+                } else if("Navigation" === (checkbox)) {
+                    if (append) {
+                        query = query + ",";
+                    }
+                    query = query + "hasNavigation:true";
+                    append = true;
+                } else if("Heated Seats" === (checkbox)) {
+                    if (append) {
+                        query = query + ",";
+                    }
+                    query = query + "hasHeatedSeats:true";
+                    append = true;
+                } else if("Four Wheel Drive" === (checkbox)) {
+                    if (append) {
+                        query = query + ",";
+                    }
+                    query = query + "hasFourWheelDrive:true";
+                    append = true;
                 }
             });
-        if(exclusive) {
-            query = "?exclusive=true&search=" + query;
-        } else {
-            query = "?exclusive=false&search=" + query;
-        }
+        console.log(query);
         this.fetchData(query);
     };
 
@@ -65,7 +84,8 @@ class App extends Component {
       fetch(url + query).then(res => res.json())
           .then((data) => {
               console.log(data);
-              this.setState({ cars: data, renderResults: true });
+              this.setState({ cars: data });
+              this.setState({ renderResults: true });
           })
           .catch(console.log)
 
