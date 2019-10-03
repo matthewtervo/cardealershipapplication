@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import Checkbox from "./Checkbox";
 import CarSearchResults from "./CarSearchResults";
+import Select from 'react-select';
 
-const SEARCH_OPTIONS = {
+const CHECKBOXES_OPTIONS = {
     "Sunroof": "hasSunroof:true,",
     "Four Wheel Drive": "hasFourWheelDrive:true,",
     "Low Miles": "hasLowMiles:true,",
@@ -12,21 +13,67 @@ const SEARCH_OPTIONS = {
     "Inclusive Search": "&exclusive=false"
     };
 
+const MAKE_OPTIONS = {
+    "Chevy": "make:chevy,",
+    "Ford": "make:ford,",
+    "Mercedes": "make:mercedes,",
+    "Toyota": "make:toyota,"
+};
+
+const SEARCH_COLOR = {
+    "Gray": "color:gray,",
+    "Silver": "color:silver,",
+    "Black": "color:black,",
+    "White": "color:white,"
+};
+
 const url = "http://localhost:8080/cars?search=";
 
 class CarInventorySearch extends Component {
 
     state = {
-        checkboxes: Object.keys(SEARCH_OPTIONS).reduce(
+        checkboxes: Object.keys(CHECKBOXES_OPTIONS).reduce(
             (options, option) => ({
                 ...options,
                 [option]: false
             }),
             {}
         ),
-        isLoading: true,
+        make:  Object.keys(MAKE_OPTIONS).map(
+            (label, value) => ({
+                label: label,
+                value: value,
+                type: "make",
+                selected: false
+            }),
+            {}
+        ),
+        color:  Object.keys(SEARCH_COLOR).map(
+            (label, value) => ({
+                label: label,
+                value: value,
+                type: "color",
+                selected: false
+            }),
+            {}
+        ),
         renderResults: false,
         cars: []
+    };
+
+    handleDropDownChange = changeEvent => {
+        const type = changeEvent.type;
+        const value = changeEvent.value;
+
+        this.setState(prevState => ({
+            [type]: prevState[type].map(
+                entry =>
+                    entry.value === value ?
+                        ({...entry, selected: !entry.selected}) :
+                        {...entry, selected: false},
+                {}
+            ),
+        }));
     };
 
     handleCheckboxChange = changeEvent => {
@@ -40,17 +87,38 @@ class CarInventorySearch extends Component {
         }));
     };
 
-    appendQuery = (query, checkbox) => {
-        return query + SEARCH_OPTIONS[checkbox];
+    appendColor = (query, color) => {
+        return query + SEARCH_COLOR[color.label]
+    };
+
+    appendMake = (query, make) => {
+        return query + MAKE_OPTIONS[make.label];
+    };
+
+    appendCheckboxQuery = (query, checkbox) => {
+        return query + CHECKBOXES_OPTIONS[checkbox];
     };
 
     handleFormSubmit = formSubmitEvent => {
         formSubmitEvent.preventDefault();
         let query = "";
+
+        this.state.make
+            .filter(make => make.selected)
+            .forEach(make => {
+                query = this.appendMake(query, make);
+            });
+
+        this.state.color
+            .filter(color => color.selected)
+            .forEach(color => {
+                query = this.appendColor(query, color);
+            });
+
         Object.keys(this.state.checkboxes)
             .filter(checkbox => this.state.checkboxes[checkbox])
             .forEach(checkbox => {
-                query = this.appendQuery(query, checkbox);
+                query = this.appendCheckboxQuery(query, checkbox);
             });
         console.log(query);
         this.fetchData(query);
@@ -73,7 +141,7 @@ class CarInventorySearch extends Component {
                     <h2>Search Inventory</h2>
                     <div className="col-sm-12">
                         <form onSubmit={this.handleFormSubmit}>
-                            {Object.keys(SEARCH_OPTIONS).map(option =>
+                            {Object.keys(CHECKBOXES_OPTIONS).map(option =>
                                 <Checkbox
                                     label={option}
                                     isSelected={this.state.checkboxes[option]}
@@ -81,6 +149,16 @@ class CarInventorySearch extends Component {
                                     key={option}
                                 />
                             )}
+                            Make:
+                            <Select
+                                options={ this.state.make }
+                                onChange={this.handleDropDownChange}
+                            />
+                            Color:
+                            <Select
+                                options={ this.state.color }
+                                onChange={this.handleDropDownChange}
+                            />
                             <div className="form-group mt-2">
                                 <button type="submit" className="btn btn-primary">
                                     Search
