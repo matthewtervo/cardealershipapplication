@@ -82,17 +82,6 @@ class CarInventorySearch extends Component {
 
     };
 
-    createCheckbox = option => (
-        <Checkbox
-            label={option}
-            isSelected={this.state.checkboxes[option]}
-            onCheckboxChange={this.handleCheckboxChange}
-            key={option}
-        />
-    );
-
-    createCheckboxes = () => OPTIONS.map(this.createCheckbox);
-
     render() {
         return (
             <div className="container">
@@ -100,7 +89,14 @@ class CarInventorySearch extends Component {
                     <h2>Search Inventory</h2>
                     <div className="col-sm-12">
                         <form onSubmit={this.handleFormSubmit}>
-                            {this.createCheckboxes()}
+                            {OPTIONS.map(option =>
+                                <Checkbox
+                                    label={option}
+                                    isSelected={this.state.checkboxes[option]}
+                                    onCheckboxChange={this.handleCheckboxChange}
+                                    key={option}
+                                />
+                            )}
                             <div className="form-group mt-2">
                                 <button type="submit" className="btn btn-primary">
                                     Search
