@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import CarCreate from  "./components/CarCreate";
 import CarInventorySearch from "./components/CarInventorySearch";
 
 class App extends Component {
