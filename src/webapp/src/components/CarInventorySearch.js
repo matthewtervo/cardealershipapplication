@@ -20,7 +20,7 @@ const MAKE_OPTIONS = {
     "Toyota": "make:toyota,"
 };
 
-const SEARCH_COLOR = {
+const COLOR_OPTIONS = {
     "Gray": "color:gray,",
     "Silver": "color:silver,",
     "Black": "color:black,",
@@ -48,7 +48,7 @@ class CarInventorySearch extends Component {
             }),
             {}
         ),
-        color:  Object.keys(SEARCH_COLOR).map(
+        color:  Object.keys(COLOR_OPTIONS).map(
             (label, value) => ({
                 label: label,
                 value: value,
@@ -88,7 +88,7 @@ class CarInventorySearch extends Component {
     };
 
     appendColor = (query, color) => {
-        return query + SEARCH_COLOR[color.label]
+        return query + COLOR_OPTIONS[color.label]
     };
 
     appendMake = (query, make) => {
