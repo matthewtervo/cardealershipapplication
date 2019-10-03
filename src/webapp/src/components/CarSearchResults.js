@@ -5,9 +5,9 @@ const CarSearchResults = ({cars}) => {
         <div>
             <h1>Search Results</h1>
             {cars.map((car) => (
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Car ID: {car._id}</h5>
+                <div key={"key-" + car._id} className="card">
+                    <div className="card-body">
+                        <h5 className="card-title">Car ID: {car._id}</h5>
                         <h6 className="card-subtitle mb-2 text-muted">Make: {car.make}</h6>
                         <h6 className="card-subtitle mb-2 text-muted">Color: {car.color}</h6>
                         <h6 className="card-subtitle mb-2 text-muted">Year: {car.year}</h6>
