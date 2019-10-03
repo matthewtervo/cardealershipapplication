@@ -39,8 +39,8 @@ public class CarController {
     }
 
     @GetMapping(path = "/cars")
-    public List<Car> search(@RequestParam(value = "exclusive", defaultValue = "true") boolean exclusive,
-                            @RequestParam(value = "search") String search) {
+    public List<Car> search(@RequestParam(value = "search") String search,
+                            @RequestParam(value = "exclusive", defaultValue = "true") boolean exclusive) {
         Specification<Car> spec = paramResolver.resolveSpecification(exclusive, search);
         return carRepository.findAll(spec);
     }

@@ -2,21 +2,22 @@ import React, {Component} from 'react';
 import Checkbox from "./Checkbox";
 import CarSearchResults from "./CarSearchResults";
 
-const OPTIONS = {
+const SEARCH_OPTIONS = {
     "Sunroof": "hasSunroof:true,",
     "Four Wheel Drive": "hasFourWheelDrive:true,",
     "Low Miles": "hasLowMiles:true,",
     "Power Windows": "hasPowerWindows:true,",
     "Navigation": "hasNavigation:true,",
-    "Heated Seats": "hasHeatedSeats:true,"
+    "Heated Seats": "hasHeatedSeats:true,",
+    "Inclusive Search": "&exclusive=false"
     };
 
-const url = "http://localhost:8080/cars";
+const url = "http://localhost:8080/cars?search=";
 
 class CarInventorySearch extends Component {
 
     state = {
-        checkboxes: Object.keys(OPTIONS).reduce(
+        checkboxes: Object.keys(SEARCH_OPTIONS).reduce(
             (options, option) => ({
                 ...options,
                 [option]: false
@@ -40,28 +41,17 @@ class CarInventorySearch extends Component {
     };
 
     appendQuery = (query, checkbox) => {
-        return query + OPTIONS[checkbox];
+        return query + SEARCH_OPTIONS[checkbox];
     };
 
     handleFormSubmit = formSubmitEvent => {
         formSubmitEvent.preventDefault();
         let query = "";
-        let exclusive = true;
         Object.keys(this.state.checkboxes)
             .filter(checkbox => this.state.checkboxes[checkbox])
             .forEach(checkbox => {
-                //todo - proper data structure
-                if("Inclusive Search" === checkbox) {
-                    exclusive = false;
-                } else {
-                    query = this.appendQuery(query, checkbox);
-                }
+                query = this.appendQuery(query, checkbox);
             });
-        if(exclusive) {
-            query = "?exclusive=true&search=" + query;
-        } else {
-            query = "?exclusive=false&search=" + query;
-        }
         console.log(query);
         this.fetchData(query);
     };
@@ -83,7 +73,7 @@ class CarInventorySearch extends Component {
                     <h2>Search Inventory</h2>
                     <div className="col-sm-12">
                         <form onSubmit={this.handleFormSubmit}>
-                            {Object.keys(OPTIONS).map(option =>
+                            {Object.keys(SEARCH_OPTIONS).map(option =>
                                 <Checkbox
                                     label={option}
                                     isSelected={this.state.checkboxes[option]}
