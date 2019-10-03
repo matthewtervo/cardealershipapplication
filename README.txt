@@ -50,6 +50,28 @@ SETUP/START INSTRUCTIONS:
     The frontend is a very simple UI where you can select checkbox options for the car search criteria. By default the
     search is exclusive, unless you check the ‘Inclusive Search’ option.
 
+TO-DO:
+- Restructure front end to support the following:
+    Create new car entry in database.
+    Delete existing car entry in database.
+    Update existing car entry in database.
+    Query specific car ID (search endpoint already does this but I want an example that doesnt use Specifications)
+    Add additional search options:
+        make
+        color
+        model
+        year range
+        price range
+        mileage range
+- Look into/implement React component testing.
+
+- Update backend with:
+    Logging via log4j.
+    Proper API error handling on bad/failed requests.
+    Caching? why not!
+    Deploy react front end using spring boot?
+        ^Fix cross domain issue?
+
 
 
 
