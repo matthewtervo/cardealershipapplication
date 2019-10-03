@@ -2,13 +2,21 @@ import React, {Component} from 'react';
 import Checkbox from "./Checkbox";
 import CarSearchResults from "./CarSearchResults";
 
-const OPTIONS = ["Inclusive Search", "Sunroof", "Four Wheel Drive", "Low Miles", "Power Windows", "Navigation", "Heated Seats"];
+const OPTIONS = {
+    "Sunroof": "hasSunroof:true,",
+    "Four Wheel Drive": "hasFourWheelDrive:true,",
+    "Low Miles": "hasLowMiles:true,",
+    "Power Windows": "hasPowerWindows:true,",
+    "Navigation": "hasNavigation:true,",
+    "Heated Seats": "hasHeatedSeats:true,"
+    };
+
 const url = "http://localhost:8080/cars";
 
 class CarInventorySearch extends Component {
 
     state = {
-        checkboxes: OPTIONS.reduce(
+        checkboxes: Object.keys(OPTIONS).reduce(
             (options, option) => ({
                 ...options,
                 [option]: false
@@ -32,21 +40,7 @@ class CarInventorySearch extends Component {
     };
 
     appendQuery = (query, checkbox) => {
-        //todo - use proper data structure, map key to value
-        if("Sunroof" === checkbox) {
-            query = query + "hasSunroof:true,";
-        } else if("Low Miles" === checkbox) {
-            query = query + "hasLowMiles:true,";
-        } else if("Power Windows" === checkbox) {
-            query = query + "hasPowerWindows:true,";
-        } else if("Navigation" === checkbox) {
-            query = query + "hasNavigation:true,";
-        } else if("Heated Seats" === checkbox) {
-            query = query + "hasHeatedSeats:true,";
-        } else if("Four Wheel Drive" === checkbox) {
-            query = query + "hasFourWheelDrive:true,";
-        }
-        return query;
+        return query + OPTIONS[checkbox];
     };
 
     handleFormSubmit = formSubmitEvent => {
@@ -89,7 +83,7 @@ class CarInventorySearch extends Component {
                     <h2>Search Inventory</h2>
                     <div className="col-sm-12">
                         <form onSubmit={this.handleFormSubmit}>
-                            {OPTIONS.map(option =>
+                            {Object.keys(OPTIONS).map(option =>
                                 <Checkbox
                                     label={option}
                                     isSelected={this.state.checkboxes[option]}

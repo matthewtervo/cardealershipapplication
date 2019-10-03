@@ -7,7 +7,6 @@ class App extends Component {
         return (
             <div className="container">
                 <h1>Car Dealership App</h1>
-                <CarCreate />
                 <CarInventorySearch />
             </div>
         );

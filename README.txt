@@ -64,8 +64,10 @@ TO-DO:
         price range
         mileage range
 - Look into/implement React component testing.
+- Look into TypeScript
 
 - Update backend with:
+    Search results pagination
     Logging via log4j.
     Proper API error handling on bad/failed requests.
     Caching? why not!
